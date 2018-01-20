@@ -1,10 +1,12 @@
 package br.com.helpc.gestorvendas.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.helpc.gestorvendas.domain.Categoria;
 import br.com.helpc.gestorvendas.repositories.CategoriaRepository;
+import br.com.helpc.gestorvendas.services.exceptions.DataIntegrityException;
 import br.com.helpc.gestorvendas.services.exceptions.ObjectNotFoundException;
 
 
@@ -30,6 +32,15 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return repo.save(obj);
+	}
+
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.delete(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é não possivel Deletar uma Categoria que possui Produtos.");
+		}	
 	}
 	
 	
