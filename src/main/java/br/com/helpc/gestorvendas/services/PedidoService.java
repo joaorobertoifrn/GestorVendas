@@ -14,10 +14,10 @@ public class PedidoService {
 	private PedidoRepository repo;
 	
 	public Pedido buscar(Integer id) {
-		Pedido pedido = repo.findOne(id);
-		if (pedido == null) {
-			throw new ObjectNotFoundException("Pedido não encontrado! Id: "+id+ " , Tipo: "+ Pedido.class.getName());
+		Pedido obj = repo.findOne(id);
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado! Id: "+id+ " , Tipo: "+ Pedido.class.getName());
 		}
-		return pedido;
+		return obj;
 	}
 }

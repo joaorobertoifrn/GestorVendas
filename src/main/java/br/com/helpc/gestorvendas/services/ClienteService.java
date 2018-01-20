@@ -15,11 +15,16 @@ public class ClienteService {
 	private ClienteRepository repo;
 	
 	public Cliente buscar(Integer id) {
-		Cliente cliente = repo.findOne(id);
-		if (cliente == null) {
-			throw new ObjectNotFoundException("Cliente não encontrado! Id: "+id+ " , Tipo: "+ Cliente.class.getName());
+		Cliente obj = repo.findOne(id);
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado! Id: "+id+ " , Tipo: "+ Cliente.class.getName());
 		}
-		return cliente;
+		return obj;
+	}
+
+	public Cliente insert(Cliente obj) {
+		obj.setId(null);
+		return repo.save(obj);
 	}
 	
 	
