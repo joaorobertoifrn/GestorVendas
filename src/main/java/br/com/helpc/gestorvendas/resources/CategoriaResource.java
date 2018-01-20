@@ -1,6 +1,8 @@
 package br.com.helpc.gestorvendas.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.helpc.gestorvendas.domain.Categoria;
+import br.com.helpc.gestorvendas.dto.CategoriaDTO;
 import br.com.helpc.gestorvendas.services.CategoriaService;
 
 @RestController
@@ -20,15 +23,34 @@ public class CategoriaResource {
 
 	@Autowired
 	private CategoriaService service;
+	
+	/**
+	 * Método Retorna Lista de Categorias com DTO
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		
+		List<Categoria> list = service.findAll();
+		
+		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
 
+		return ResponseEntity.ok().body(listDTO);
+	}
+
+	/**
+	 * Método Retorna uma Categoria passando como parâmetro o id.
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 		
 		Categoria obj = service.find(id);
 
-		return ResponseEntity.ok(obj);
+		return ResponseEntity.ok().body(obj);
 	}
-	
+
+	/**
+	 * Método Insere uma nova Categoria.
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
 		obj = service.insert(obj);
@@ -36,7 +58,10 @@ public class CategoriaResource {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();		
 		return ResponseEntity.created(uri).build();
 	}
-
+	
+	/**
+	 * Método Atualiza a Categoria passando como parâmetro o id.
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id) {
 		obj.setId(id);
@@ -44,11 +69,13 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	/**
+	 * Método Deleta uma Categoria passando como parâmetro o id.
+	 */	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id) {
-		
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {	
 		service.delete(id);
-
 		return ResponseEntity.noContent().build();
 	}
+	
 }

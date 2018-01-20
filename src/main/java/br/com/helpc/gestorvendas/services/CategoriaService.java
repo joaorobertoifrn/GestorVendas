@@ -1,5 +1,7 @@
 package br.com.helpc.gestorvendas.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,10 @@ public class CategoriaService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é não possivel Deletar uma Categoria que possui Produtos.");
 		}	
+	}
+
+	public List<Categoria> findAll() {
+		return repo.findAll();
 	}
 	
 	
