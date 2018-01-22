@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.helpc.gestorvendas.domain.Cliente;
 import br.com.helpc.gestorvendas.dto.ClienteDTO;
+import br.com.helpc.gestorvendas.dto.ClienteNewDTO;
 import br.com.helpc.gestorvendas.services.ClienteService;
 
 @RestController
@@ -69,7 +70,7 @@ public class ClienteResource {
 	 * Método Insere uma nova Cliente. Com Validação no DTO.
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDto) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
 		Cliente obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
