@@ -2,23 +2,49 @@ package br.com.helpc.gestorvendas.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import br.com.helpc.gestorvendas.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	
-	private static final long serialVersionUID = 1L; 
+	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message="Preenchimento Obrigatório")
+	@Length(min=10, max=150, message="O tamanho deve ser entre 10 e 150 caracteres.")
 	private String nome;
+	
+	@NotEmpty(message="Preenchimento Obrigatório")
+	@Email(message="E-mail inválido.")
 	private String email;
+	
+	@NotEmpty(message="Preenchimento Obrigatório")
 	private String cpfOuCnpj;
+	
 	private Integer tipo;
 	
+	@NotEmpty(message="Preenchimento Obrigatório")
 	private String logradouro;
+	
+	@NotEmpty(message="Preenchimento Obrigatório")
 	private String numero;
+	
 	private String complemento;
+	
+	@NotEmpty(message="Preenchimento Obrigatório")
 	private String bairro;
+	
+	@NotEmpty(message="Preenchimento Obrigatório")
 	private String cep;
 	
+	@NotEmpty(message="Preenchimento Obrigatório")
 	private String telefone1;
+	
 	private String telefone2;
+	
 	private String telefone3;
 	
 	private Integer cidadeId;
