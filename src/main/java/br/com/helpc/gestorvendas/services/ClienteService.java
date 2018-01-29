@@ -56,7 +56,7 @@ public class ClienteService {
 		try {
 			repo.delete(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é não possivel Deletar o Cliente.");
+			throw new DataIntegrityException("Não é não possivel Deletar o Cliente, pois tem pedidos.");
 		}
 	}
 
