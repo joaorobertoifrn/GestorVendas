@@ -7,15 +7,19 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.helpc.gestorvendas.domain.Cliente;
+import br.com.helpc.gestorvendas.services.validation.ClienteUpdate;
 
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L; 
 
 	private Integer id;
+	
 	@NotEmpty(message="Preenchimento Obrigatório")
 	@Length(min=10, max=150, message="O tamanho deve ser entre 10 e 150 caracteres.")
 	private String nome;
+	
 	@NotEmpty(message="Preenchimento Obrigatório")
 	@Email(message="E-mail inválido.")
 	private String email;
