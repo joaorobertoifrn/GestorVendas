@@ -3,8 +3,12 @@ package br.com.helpc.gestorvendas.services;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import br.com.helpc.gestorvendas.domain.Cliente;
 import br.com.helpc.gestorvendas.domain.ItemPedido;
 import br.com.helpc.gestorvendas.domain.PagamentoComBoleto;
 import br.com.helpc.gestorvendas.domain.Pedido;
@@ -14,6 +18,8 @@ import br.com.helpc.gestorvendas.repositories.ItemPedidoRepository;
 import br.com.helpc.gestorvendas.repositories.PagamentoRepository;
 import br.com.helpc.gestorvendas.repositories.PedidoRepository;
 import br.com.helpc.gestorvendas.repositories.ProdutoRepository;
+import br.com.helpc.gestorvendas.security.UserSS;
+import br.com.helpc.gestorvendas.services.exceptions.AuthorizationException;
 import br.com.helpc.gestorvendas.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -70,4 +76,15 @@ public class PedidoService {
 		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
+	
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente = clienteRepository.findOne(user.getId());
+		return repo.findByCliente(cliente, pageRequest);
+	}
 }
+	
