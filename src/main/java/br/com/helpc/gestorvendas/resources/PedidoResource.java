@@ -31,7 +31,7 @@ public class PedidoResource {
 		return ResponseEntity.ok(obj);
 
 	}
-
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj) {
 		obj = service.insert(obj);
