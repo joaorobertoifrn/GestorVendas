@@ -13,12 +13,15 @@ import org.springframework.stereotype.Service;
 import br.com.helpc.gestorvendas.domain.Cidade;
 import br.com.helpc.gestorvendas.domain.Cliente;
 import br.com.helpc.gestorvendas.domain.Endereco;
+import br.com.helpc.gestorvendas.domain.enums.Perfil;
 import br.com.helpc.gestorvendas.domain.enums.TipoCliente;
 import br.com.helpc.gestorvendas.dto.ClienteDTO;
 import br.com.helpc.gestorvendas.dto.ClienteNewDTO;
 import br.com.helpc.gestorvendas.repositories.CidadeRepository;
 import br.com.helpc.gestorvendas.repositories.ClienteRepository;
 import br.com.helpc.gestorvendas.repositories.EnderecoRepository;
+import br.com.helpc.gestorvendas.security.UserSS;
+import br.com.helpc.gestorvendas.services.exceptions.AuthorizationException;
 import br.com.helpc.gestorvendas.services.exceptions.DataIntegrityException;
 import br.com.helpc.gestorvendas.services.exceptions.ObjectNotFoundException;
 
@@ -38,6 +41,10 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepository;
 
 	public Cliente find(Integer id) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
 		Cliente obj = repo.findOne(id);
 		if (obj == null) {
 			throw new ObjectNotFoundException(
