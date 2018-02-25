@@ -60,8 +60,6 @@ public class Cliente implements Serializable {
 	@JsonIgnore
 	private List<Pedido> pedidos = new ArrayList<>();
 	
-	private String imageUrl;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -156,18 +154,5 @@ public class Cliente implements Serializable {
 		this.tipo = (tipo==null) ? null: tipo.getCod();
 		this.senha = senha;
 		addPerfil(Perfil.CLIENTE);
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
-
-	
-	
-	
+	}	
 }
