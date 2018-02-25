@@ -2,9 +2,12 @@ package br.com.helpc.gestorvendas.resources.exception;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class StandardError implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@JsonFormat(pattern="dd/MM/yyyy hh:mm")
 	private Long timestamp;
 	private Integer status;
 	private String error;
