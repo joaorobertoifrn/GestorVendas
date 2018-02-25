@@ -49,7 +49,8 @@ public class PedidoService {
 	public Pedido find(Integer id) {
 		Pedido obj = repo.findOne(id);
 		if (obj == null) {
-			throw new ObjectNotFoundException("Objeto não encontrado! Id: "+id+ " , Tipo: "+ Pedido.class.getName());
+			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id
+					+ ", Tipo: " + Pedido.class.getName());
 		}
 		return obj;
 	}
@@ -80,11 +81,10 @@ public class PedidoService {
 	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		UserSS user = UserService.authenticated();
 		if (user == null) {
-			throw new AuthorizationException("Acesso Negado");
+			throw new AuthorizationException("Acesso negado");
 		}
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		Cliente cliente = clienteRepository.findOne(user.getId());
+		Cliente cliente =  clienteRepository.findOne(user.getId());
 		return repo.findByCliente(cliente, pageRequest);
 	}
 }
-	

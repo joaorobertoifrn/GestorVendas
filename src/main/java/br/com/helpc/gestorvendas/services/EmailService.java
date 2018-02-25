@@ -10,7 +10,6 @@ public interface EmailService {
 	void sendOrderConfirmationEmail(Pedido obj);
 	
 	void sendEmail(SimpleMailMessage msg);
-
-	void sendNewPasswordEmail(Cliente cliente, String newPassword);
 	
+	void sendNewPasswordEmail(Cliente cliente, String newPass);
 }

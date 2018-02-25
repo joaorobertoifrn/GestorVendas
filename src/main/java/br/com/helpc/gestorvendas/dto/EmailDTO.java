@@ -6,15 +6,13 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class EmailDTO implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 	
-	@NotEmpty(message="Preenchimento Obrigatório")
-	@Email(message="E-mail inválido.")
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Email(message="Email inválido")
 	private String email;
 	
 	public EmailDTO() {
-		
 	}
 
 	public String getEmail() {
@@ -24,5 +22,4 @@ public class EmailDTO implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 }

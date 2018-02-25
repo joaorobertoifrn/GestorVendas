@@ -2,26 +2,27 @@ package br.com.helpc.gestorvendas.domain.enums;
 
 public enum TipoCliente {
 
-	PessoaFisica(1, "Pessoa Física"),
-	PessoaJuridica(2, "Pessoa Jurídica");
+	PESSOAFISICA(1, "Pessoa Física"),
+	PESSOAJURIDICA(2, "Pessoa Jurídica");
 	
-	private Integer cod;
+	private int cod;
 	private String descricao;
 	
-	private TipoCliente(Integer cod, String descricao) {
+	private TipoCliente(int cod, String descricao) {
 		this.cod = cod;
 		this.descricao = descricao;
 	}
 	
-	public Integer getCod() {
+	public int getCod() {
 		return cod;
 	}
 	
-	public String getDescricao() {
+	public String getDescricao () {
 		return descricao;
 	}
 	
 	public static TipoCliente toEnum(Integer cod) {
+		
 		if (cod == null) {
 			return null;
 		}
@@ -32,7 +33,7 @@ public enum TipoCliente {
 			}
 		}
 		
-		throw new IllegalArgumentException("Id do Enum inválido: " + cod);
-		
+		throw new IllegalArgumentException("Id inválido: " + cod);
 	}
+	
 }

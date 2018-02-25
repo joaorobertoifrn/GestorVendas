@@ -11,18 +11,31 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ItemPedido implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 	
-	@EmbeddedId
 	@JsonIgnore
+	@EmbeddedId
 	private ItemPedidoPK id = new ItemPedidoPK();
 	
 	private Double desconto;
-	
 	private Integer quantidade;
-	
 	private Double preco;
+	
+	public ItemPedido() {
+	}
+
+	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
+		super();
+		id.setPedido(pedido);
+		id.setProduto(produto);
+		this.desconto = desconto;
+		this.quantidade = quantidade;
+		this.preco = preco;
+	}
+
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
+	}
 	
 	@JsonIgnore
 	public Pedido getPedido() {
@@ -39,10 +52,6 @@ public class ItemPedido implements Serializable {
 	
 	public void setProduto(Produto produto) {
 		id.setProduto(produto);
-	}
-	
-	public double getSubTotal() {
-		return (preco - desconto) * quantidade;
 	}
 	
 	public ItemPedidoPK getId() {
@@ -77,23 +86,6 @@ public class ItemPedido implements Serializable {
 		this.preco = preco;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public ItemPedido() {
-		
-	}
-
-	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
-		super();
-		id.setPedido(pedido);
-		id.setProduto(produto);
-		this.desconto = desconto;
-		this.quantidade = quantidade;
-		this.preco = preco;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -118,7 +110,7 @@ public class ItemPedido implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));

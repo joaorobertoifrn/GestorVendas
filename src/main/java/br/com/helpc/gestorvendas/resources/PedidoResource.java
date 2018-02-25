@@ -19,39 +19,33 @@ import br.com.helpc.gestorvendas.domain.Pedido;
 import br.com.helpc.gestorvendas.services.PedidoService;
 
 @RestController
-@RequestMapping(value = "/pedidos")
+@RequestMapping(value="/pedidos")
 public class PedidoResource {
-
+	
 	@Autowired
 	private PedidoService service;
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
-
-		Pedido obj = service.find(id);
-
-		return ResponseEntity.ok(obj);
-
-	}
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
+		Pedido obj = service.find(id);
+		return ResponseEntity.ok().body(obj);
+	}
+
+	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj) {
 		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
-	/**
-	 * Método Retorna Lista de Pedidos com Paginação
-	 */
-	@RequestMapping(method = RequestMethod.GET)
+
+	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<Pedido>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="instante") String orderBy, 
 			@RequestParam(value="direction", defaultValue="DESC") String direction) {
-		Page<Pedido> list = service.findPage(page,linesPerPage,orderBy,direction);
+		Page<Pedido> list = service.findPage(page, linesPerPage, orderBy, direction);
 		return ResponseEntity.ok().body(list);
 	}
-	
 }

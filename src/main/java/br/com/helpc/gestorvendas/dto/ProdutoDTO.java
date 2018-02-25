@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import br.com.helpc.gestorvendas.domain.Produto;
 
-
 public class ProdutoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 

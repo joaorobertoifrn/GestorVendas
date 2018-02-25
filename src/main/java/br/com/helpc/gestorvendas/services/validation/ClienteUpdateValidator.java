@@ -16,8 +16,6 @@ import br.com.helpc.gestorvendas.dto.ClienteDTO;
 import br.com.helpc.gestorvendas.repositories.ClienteRepository;
 import br.com.helpc.gestorvendas.resources.exception.FieldMessage;
 
-
-
 public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {
 
 	@Autowired

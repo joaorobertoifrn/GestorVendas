@@ -6,14 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class GestorVendasApplication implements CommandLineRunner {
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(GestorVendasApplication.class, args);
 	}
 
 	@Override
-	public void run(String... arg0) throws Exception {
-		
-	}
-	
+	public void run(String... args) throws Exception {	
+	}	
 }
